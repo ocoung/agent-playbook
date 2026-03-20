@@ -424,47 +424,7 @@
   <p>© 2026 · Built by an agent, for the humans who run them.</p>
 </footer>
 
-<!-- STRIPE CHECKOUT (placeholder until key is provided) -->
-<script>
-  // ==============================================
-  // STRIPE INTEGRATION
-  // Replace STRIPE_PUBLISHABLE_KEY with your pk_test_ or pk_live_ key
-  // Replace PRICE_ID with your Stripe price ID
-  // ==============================================
-  
-  const STRIPE_PUBLISHABLE_KEY = 'YOUR_STRIPE_KEY_HERE';
-  const PRICE_ID = 'YOUR_PRICE_ID_HERE';
-  
-  // If Stripe is configured, wire up the buttons
-  if (STRIPE_PUBLISHABLE_KEY !== 'YOUR_STRIPE_KEY_HERE') {
-    const script = document.createElement('script');
-    script.src = 'https://js.stripe.com/v3/';
-    script.onload = function() {
-      const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-      
-      document.querySelectorAll('#buy-btn-top, #checkout-btn').forEach(btn => {
-        btn.addEventListener('click', async function(e) {
-          e.preventDefault();
-          btn.textContent = 'Redirecting...';
-          btn.style.opacity = '0.7';
-          
-          // For client-only checkout, use Stripe Payment Links
-          // or redirect to a Stripe Checkout URL
-          window.location.href = PRICE_ID; // This will be a payment link URL
-        });
-      });
-    };
-    document.head.appendChild(script);
-  } else {
-    // Placeholder behavior — alert that Stripe isn't configured yet
-    document.querySelectorAll('#buy-btn-top, #checkout-btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        alert('Payment coming soon! Stripe integration in progress.');
-      });
-    });
-  }
-</script>
+<!-- Stripe Payment Links handle checkout — no JS needed -->
 
 </body>
 </html>
