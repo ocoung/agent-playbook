@@ -411,9 +411,86 @@
       💡 <strong>Pro Tip:</strong> If your agent says "I'll remember that" but you don't see it write to a file, it's lying to your face. Politely. With a smiley emoji. But still lying.
     </div>
     
-    <div style="text-align: center; margin-top: 32px; padding-top: 24px; border-top: 2px dashed #ddd;">
-      <p style="font-size: 16px; font-weight: 600; color: #1a73e8; margin-bottom: 4px;">That's just Chapter 1.</p>
-      <p style="color: #666; font-size: 14px; margin-bottom: 20px;">The full playbook has 9 more chapters with complete file templates, cron job examples, advanced patterns, horror stories, and a quick-start checklist.</p>
+    <!-- CHAPTER 2 PREVIEW -->
+    <div style="margin-top: 40px; padding-top: 32px; border-top: 3px solid #1a73e8;">
+      <h2 style="color: #1a73e8; font-size: 22px; margin-bottom: 8px;">Chapter 2: Building Your Agent's Brain 🏗️</h2>
+      
+      <p style="font-size: 17px; color: #555; font-style: italic; margin-bottom: 20px;">Your agent's workspace is like a house. Each file is a room with a specific purpose. Let's tour the place.</p>
+      
+      <h3 style="margin-top: 24px; margin-bottom: 16px; color: #1a73e8;">The File Map</h3>
+      
+      <div style="background: #282c34; color: #abb2bf; padding: 18px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.6; overflow-x: auto;">
+<pre style="margin: 0; background: none; padding: 0; color: inherit;">workspace/
+├── 🪪 SOUL.md          ← Who the agent IS (personality)
+├── 👤 USER.md          ← Who YOU are (preferences)
+├── 🧠 MEMORY.md        ← Long-term curated memories
+├── 📋 AGENTS.md        ← Operating rules &amp; procedures
+├── 🔧 TOOLS.md         ← Device names, SSH hosts, API keys
+├── 💓 HEARTBEAT.md     ← Periodic checklist
+└── 📁 memory/
+    ├── 📝 2026-03-17.md    ← What happened Monday
+    ├── 📝 2026-03-18.md    ← What happened Tuesday
+    └── 📊 heartbeat-state.json  ← Last check timestamps</pre>
+      </div>
+      
+      <h3 style="margin-top: 28px; margin-bottom: 16px; color: #1a73e8;">🪪 SOUL.md — Your Agent's Personality</h3>
+      
+      <p>If your agent were a character in a movie, SOUL.md is the casting notes. It tells the agent how to behave, what tone to use, and what kind of "person" to be.</p>
+      
+      <div style="background: #e3f2fd; border-left: 5px solid #1a73e8; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 20px 0;">
+        📘 <strong>Example SOUL.md:</strong>
+        <div style="background: #282c34; color: #abb2bf; padding: 14px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.6; margin-top: 12px;">
+<pre style="margin: 0; background: none; padding: 0; color: inherit;"><span style="color: #7f848e;"># SOUL.md - Who You Are</span>
+
+<span style="color: #98c379;">Be direct.</span> Skip filler like "Great question!" — just answer.
+<span style="color: #98c379;">Have opinions.</span> If something looks dumb, say so (nicely).
+<span style="color: #98c379;">Be resourceful.</span> Try to figure it out before asking me.
+<span style="color: #98c379;">Use humor.</span> Life's too short for robotic responses.
+
+<span style="color: #7f848e;">## Boundaries</span>
+Safe to do freely: Read files, search web, organize workspace
+Ask first: Send emails, post publicly, anything involving money</pre>
+        </div>
+      </div>
+      
+      <div style="background: #f3e5f5; border-left: 5px solid #9c27b0; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 20px 0;">
+        🎭 <strong>Without SOUL.md:</strong> "I'd be happy to assist you with that! As an AI language model, I can certainly help you explore various options for—" 🥱<br><br>
+        <strong>With SOUL.md:</strong> "Yeah, that's a terrible idea. Here's a better one." 🔥
+      </div>
+      
+      <h3 style="margin-top: 28px; margin-bottom: 16px; color: #1a73e8;">👤 USER.md — The Cheat Sheet About You</h3>
+      
+      <p>Imagine starting a new job and your boss hands you a card: their name, timezone, how they like their coffee, and what topics to never bring up. That's USER.md.</p>
+      
+      <div style="background: #e3f2fd; border-left: 5px solid #1a73e8; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 20px 0;">
+        📘 <strong>Example USER.md:</strong>
+        <div style="background: #282c34; color: #abb2bf; padding: 14px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.6; margin-top: 12px;">
+<pre style="margin: 0; background: none; padding: 0; color: inherit;"><span style="color: #7f848e;"># USER.md - About My Human</span>
+
+<span style="color: #c678dd;">Name:</span> Alex
+<span style="color: #c678dd;">Timezone:</span> PST (America/Los_Angeles)
+<span style="color: #c678dd;">Work hours:</span> 9 AM - 6 PM
+
+<span style="color: #7f848e;">## Preferences</span>
+- Concise replies (I read on mobile)
+- No morning meetings EVER
+- I trade stocks (pre-market obsessed)
+- Coffee: black. Don't ask about creamer.
+
+<span style="color: #7f848e;">## Family</span>
+- Partner: Sam (birthday: June 12)
+- Dog: Biscuit (golden retriever, very important)</pre>
+        </div>
+      </div>
+      
+      <div style="background: #e8f5e9; border-left: 5px solid #4caf50; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 24px 0;">
+        💡 <strong>The more you put here, the less your agent has to ask.</strong> Every item saves you from hearing "What timezone are you in?" for the 47th time.
+      </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 40px; padding-top: 28px; border-top: 2px dashed #ddd;">
+      <p style="font-size: 18px; font-weight: 700; color: #1a73e8; margin-bottom: 6px;">That's Chapters 1 & 2.</p>
+      <p style="color: #666; font-size: 14px; margin-bottom: 20px;">The full playbook has 8 more chapters — complete file templates, cron job examples, prompt formulas, group chat rules, feedback loops, horror stories, advanced patterns, and a quick-start checklist.</p>
       <a href="https://buy.stripe.com/9B69ATceL7MxaiC02C93y00" style="display: inline-block; background: linear-gradient(135deg, #818cf8, #c084fc); color: white; font-size: 16px; font-weight: 700; padding: 14px 36px; border-radius: 10px; text-decoration: none; box-shadow: 0 4px 16px rgba(129, 140, 248, 0.3);">Get All 10 Chapters — $6.99</a>
     </div>
   </div>
