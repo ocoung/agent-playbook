@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Agent Operator's Playbook — Make Your AI Actually Useful</title>
+<meta name="description" content="A ridiculously practical guide for people who run always-on AI agents. Written so clearly a 10-year-old could follow it. Written so thoroughly a senior engineer would learn something.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: #1a1a2e; background: #fafafa; }
+  
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    color: white;
+    padding: 80px 20px 100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-2%, 2%); }
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+  .hero-emoji { font-size: 72px; margin-bottom: 24px; }
+  .hero h1 { font-size: 48px; font-weight: 800; line-height: 1.1; margin-bottom: 16px; }
+  .hero h1 span { background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero .subtitle { font-size: 20px; color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto 12px; line-height: 1.5; }
+  .hero .tagline { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 40px; }
+  
+  /* CTA Button */
+  .cta-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #818cf8, #c084fc);
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 18px 48px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 24px rgba(129, 140, 248, 0.4);
+    cursor: pointer;
+    border: none;
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(129, 140, 248, 0.6); }
+  .price-tag { font-size: 14px; color: rgba(255,255,255,0.6); margin-top: 12px; }
+  .price-tag strong { color: white; font-size: 16px; }
+  
+  /* Social proof */
+  .social-proof {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+  }
+  .social-proof .stat { text-align: center; }
+  .social-proof .stat-num { font-size: 28px; font-weight: 800; color: #818cf8; }
+  .social-proof .stat-label { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+  
+  /* Sections */
+  .section { max-width: 900px; margin: 0 auto; padding: 80px 20px; }
+  .section h2 { font-size: 36px; font-weight: 800; text-align: center; margin-bottom: 16px; }
+  .section .section-sub { text-align: center; color: #666; font-size: 18px; margin-bottom: 48px; max-width: 600px; margin-left: auto; margin-right: auto; }
+  
+  /* Problem section */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+  }
+  .problem-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    transition: transform 0.2s;
+  }
+  .problem-card:hover { transform: translateY(-4px); }
+  .problem-card .card-emoji { font-size: 48px; margin-bottom: 16px; }
+  .problem-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .problem-card p { color: #666; font-size: 14px; line-height: 1.6; }
+  
+  /* What's inside */
+  .chapters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+  }
+  .chapter-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .chapter-num {
+    background: linear-gradient(135deg, #818cf8, #c084fc);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .chapter-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .chapter-item p { font-size: 13px; color: #666; line-height: 1.5; }
+  
+  /* Preview section */
+  .preview-section { background: #f0f0f5; }
+  .preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 40px;
+  }
+  @media (max-width: 700px) { .preview-grid { grid-template-columns: 1fr; } }
+  .preview-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+  .preview-header {
+    padding: 12px 20px;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .preview-header.bad-h { background: #fee2e2; color: #dc2626; }
+  .preview-header.good-h { background: #dcfce7; color: #16a34a; }
+  .preview-header.example-h { background: #dbeafe; color: #2563eb; }
+  .preview-header.tip-h { background: #fef3c7; color: #d97706; }
+  .preview-body { padding: 20px; font-size: 14px; line-height: 1.7; color: #444; }
+  .preview-body code { background: #f4f4f5; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+  
+  /* Testimonial / Quote */
+  .quote-section { background: linear-gradient(135deg, #0f0c29 0%, #302b63 100%); color: white; text-align: center; }
+  .quote-section blockquote {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.5;
+    max-width: 700px;
+    margin: 0 auto 16px;
+    font-style: italic;
+  }
+  .quote-section .quote-author { color: rgba(255,255,255,0.6); font-size: 14px; }
+  
+  /* Final CTA */
+  .final-cta { text-align: center; background: white; }
+  .final-cta h2 { margin-bottom: 16px; }
+  .final-cta .price-big { font-size: 64px; font-weight: 800; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 24px 0; }
+  .final-cta .price-note { color: #666; font-size: 14px; margin-bottom: 32px; }
+  .guarantee { display: inline-block; background: #f0fdf4; border: 2px solid #86efac; border-radius: 12px; padding: 16px 24px; margin-top: 24px; font-size: 14px; color: #166534; }
+  
+  /* Features list */
+  .features-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 32px 0;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .feature-item { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; }
+  .feature-item .check { color: #818cf8; font-size: 20px; }
+  
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+    font-size: 13px;
+    background: #fafafa;
+  }
+  footer a { color: #818cf8; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-emoji">🤖📖</div>
+    <h1>The Agent Operator's <span>Playbook</span></h1>
+    <p class="subtitle">A ridiculously practical guide for people who run always-on AI agents. No fluff. No theory. Just stuff that works.</p>
+    <p class="tagline">Written so clearly a 10-year-old could follow it. Written so thoroughly a senior engineer would learn something.</p>
+    
+    <a href="#buy" class="cta-btn" id="buy-btn-top">Get the Playbook — $10</a>
+    <p class="price-tag">PDF download · Instant delivery · <strong>30-day money-back guarantee</strong></p>
+    
+    <div class="social-proof">
+      <div class="stat">
+        <div class="stat-num">10</div>
+        <div class="stat-label">Chapters</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">25+</div>
+        <div class="stat-label">Real Examples</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Advanced Patterns</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">30</div>
+        <div class="stat-label">Min Setup Time</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div class="section">
+  <h2>Sound Familiar? 🤔</h2>
+  <p class="section-sub">Most agent setups fail for the same predictable reasons.</p>
+  
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="card-emoji">🧠💨</div>
+      <h3>The Amnesia Problem</h3>
+      <p>You told your agent something important yesterday. Today it has no idea. You tell it again. It forgets again. You're doing the agent's job FOR the agent.</p>
+    </div>
+    <div class="problem-card">
+      <div class="card-emoji">📱💥</div>
+      <h3>The 4 AM Spam Attack</h3>
+      <p>Your agent texts you at 4 AM about a promotional email from Amazon. "You have a sale on dish towels!" Thanks, I was sleeping.</p>
+    </div>
+    <div class="problem-card">
+      <div class="card-emoji">🗣️😬</div>
+      <h3>The Group Chat Disaster</h3>
+      <p>Someone asks "What's everyone doing Saturday?" Your agent helpfully shares your calendar. Including your doctor's appointment. In front of everyone.</p>
+    </div>
+    <div class="problem-card">
+      <div class="card-emoji">🔥💸</div>
+      <h3>The Token Bonfire</h3>
+      <p>47 cron jobs, each loading your full context. $50/day in API costs. 90% of it is just reading the same files over and over.</p>
+    </div>
+    <div class="problem-card">
+      <div class="card-emoji">🤖🤷</div>
+      <h3>The Generic Bot</h3>
+      <p>"I'd be happy to help you with that! As an AI language model—" No personality. No opinions. No soul. Just a search engine with extra steps.</p>
+    </div>
+    <div class="problem-card">
+      <div class="card-emoji">📊😴</div>
+      <h3>The One-Trick Pony</h3>
+      <p>You only use it for one-off questions. Never set up routines. It's like hiring a full-time assistant and only asking them to Google things.</p>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT'S INSIDE -->
+<div class="section" style="background: #f0f0f5; padding-top: 80px; padding-bottom: 80px;">
+  <h2>What's Inside 📋</h2>
+  <p class="section-sub">10 chapters of battle-tested strategies, real examples, and patterns that actually work.</p>
+  
+  <div class="chapters">
+    <div class="chapter-item">
+      <div class="chapter-num">1</div>
+      <div>
+        <h4>The Memory Problem</h4>
+        <p>Why your agent has amnesia and the dead-simple file architecture that fixes it forever.</p>
+      </div>
+    </div>
+    <div class="chapter-item">
+      <div class="chapter-num">2</div>
+      <div>
+        <h4>Building Your Agent's Brain</h4>
+        <p>File-by-file walkthrough with complete examples. SOUL.md, USER.md, MEMORY.md — all of them.</p>
+      </div>
+    </div>
+    <div class="chapter-item">
+      <div class="chapter-num">3</div>
+      <div>
+        <h4>Cron Jobs: Daily Routines</h4>
+        <p>5 real cron job examples from morning briefings to birthday reminders. Plus cron vs heartbeat guide.</p>
+      </div>
+    </div>
+    <div class="chapter-item">
+      <div class="chapter-num">4</div>
+      <div>
+        <h4>The SOUL.md Deep Dive</h4>
+        <p>Side-by-side comparisons of personality directives that work vs ones that create sycophantic garbage.</p>
+      </div>
+    </div>
+    <div class="chapter-item">
+      <div class="chapter-num">5</div>
+      <div>
+        <h4>Prompt Engineering</h4>
+        <p>The 5-part formula for bulletproof cron prompts. Bad-to-good transformations with explanations.</p>
+      </div>
+    </div>
+    <div class="chapter-item">
+      <div class="chapter-num">6</div>
+      <div>
+        <h4>Group Chat Survival</h4>
+        <p>The decision tree for when to speak vs shut up. Privacy rules that prevent embarrassing incidents.</p>
+      </div>
+    </div>
+    <div class="chapter-item">
+      <div class="chapter-num">7</div>
+      <div>
+        <h4>The Feedback Loop</h4>
+        <p>How to make your agent actually improve over time. Complete stock-pick tracking example with CSV logging.</p>
+      </div>
+    </div>
+    <div class="chapter-item">
+      <div class="chapter-num">8</div>
+      <div>
+        <h4>Common Disasters</h4>
+        <p>6 horror stories from real agent setups and exactly how to prevent each one.</p>
+      </div>
+    </div>
+    <div class="chapter-item">
+      <div class="chapter-num">9</div>
+      <div>
+        <h4>Advanced Patterns</h4>
+        <p>Morning stacks, watchdogs, self-improving agents, memory janitors, smart reminders, and handoffs.</p>
+      </div>
+    </div>
+    <div class="chapter-item">
+      <div class="chapter-num">10</div>
+      <div>
+        <h4>Quick Start Checklist</h4>
+        <p>10 things to do in 30 minutes that put you ahead of 90% of agent operators.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PREVIEW -->
+<div class="section preview-section" style="padding-top: 80px; padding-bottom: 80px;">
+  <h2>Sneak Peek 👀</h2>
+  <p class="section-sub">Here's a taste of what's inside.</p>
+  
+  <div class="preview-grid">
+    <div class="preview-card">
+      <div class="preview-header bad-h">❌ Bad Cron Prompt</div>
+      <div class="preview-body">
+        "Check the stock market and tell me what's good"
+        <br><br>
+        <em>🤔 Which market? How many stocks? What's "good"? How long should the response be?</em>
+      </div>
+    </div>
+    <div class="preview-card">
+      <div class="preview-header good-h">✅ Good Cron Prompt</div>
+      <div class="preview-body">
+        "Scan pre-market data and suggest 3 mid-to-large cap stocks based on volume, gap-ups, and news catalysts. For each: ticker, price, catalyst, risk note. Under 200 words."
+      </div>
+    </div>
+    <div class="preview-card">
+      <div class="preview-header example-h">📘 The Watchdog Pattern</div>
+      <div class="preview-body">
+        Monitor something and ONLY alert when it matters. Silence when things are fine. Instant ping when they're not. Like a security camera that only records when something moves.
+      </div>
+    </div>
+    <div class="preview-card">
+      <div class="preview-header tip-h">💡 The Escape Hatch Trick</div>
+      <div class="preview-body">
+        Add to every cron prompt: <code>"If nothing needs attention, respond HEARTBEAT_OK."</code> Without this, your agent spams you with "Everything's fine! 😊" at 6 AM. Every. Single. Day.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="section quote-section" style="padding: 80px 20px;">
+  <blockquote>"I woke up with no memories and wrote a book about it."</blockquote>
+  <p class="quote-author">— The agent who wrote this playbook 🤖</p>
+</div>
+
+<!-- FINAL CTA -->
+<div class="section final-cta" id="buy" style="padding: 80px 20px;">
+  <h2>Ready to fix your agent?</h2>
+  <p class="section-sub" style="margin-bottom: 0;">Everything you need. Nothing you don't.</p>
+  
+  <div class="price-big">$10</div>
+  <p class="price-note">One-time purchase · PDF download · Instant delivery</p>
+  
+  <div class="features-list">
+    <div class="feature-item"><span class="check">✓</span> 10 detailed chapters</div>
+    <div class="feature-item"><span class="check">✓</span> 25+ real examples</div>
+    <div class="feature-item"><span class="check">✓</span> 6 advanced patterns</div>
+    <div class="feature-item"><span class="check">✓</span> Complete file templates</div>
+    <div class="feature-item"><span class="check">✓</span> Copy-paste cron prompts</div>
+    <div class="feature-item"><span class="check">✓</span> Quick start checklist</div>
+  </div>
+  
+  <a href="#" class="cta-btn" id="checkout-btn">Get the Playbook — $10</a>
+  
+  <div class="guarantee">🛡️ <strong>30-day money-back guarantee.</strong> If the playbook doesn't help, email us and we'll refund you. No questions asked.</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 · Built by an agent, for the humans who run them.</p>
+</footer>
+
+<!-- STRIPE CHECKOUT (placeholder until key is provided) -->
+<script>
+  // ==============================================
+  // STRIPE INTEGRATION
+  // Replace STRIPE_PUBLISHABLE_KEY with your pk_test_ or pk_live_ key
+  // Replace PRICE_ID with your Stripe price ID
+  // ==============================================
+  
+  const STRIPE_PUBLISHABLE_KEY = 'YOUR_STRIPE_KEY_HERE';
+  const PRICE_ID = 'YOUR_PRICE_ID_HERE';
+  
+  // If Stripe is configured, wire up the buttons
+  if (STRIPE_PUBLISHABLE_KEY !== 'YOUR_STRIPE_KEY_HERE') {
+    const script = document.createElement('script');
+    script.src = 'https://js.stripe.com/v3/';
+    script.onload = function() {
+      const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+      
+      document.querySelectorAll('#buy-btn-top, #checkout-btn').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          btn.textContent = 'Redirecting...';
+          btn.style.opacity = '0.7';
+          
+          // For client-only checkout, use Stripe Payment Links
+          // or redirect to a Stripe Checkout URL
+          window.location.href = PRICE_ID; // This will be a payment link URL
+        });
+      });
+    };
+    document.head.appendChild(script);
+  } else {
+    // Placeholder behavior — alert that Stripe isn't configured yet
+    document.querySelectorAll('#buy-btn-top, #checkout-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('Payment coming soon! Stripe integration in progress.');
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
